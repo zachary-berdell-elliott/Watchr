@@ -4,10 +4,15 @@ var watchList = $("#watch-list");
 
 function watchlistDisplayer(){
     watchListArray.forEach(function(i){
-        var watchListBlock = $("<h4>").text(i);
+        var watchListBlock = $("<button>").text(i);
         watchList.append(watchListBlock);
-    })
+    });
 }
+
+watchListAddBtn.click(function(){
+    watchListArray.push(movieName);
+    localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+});
 
 watchlistDisplayer();
 
