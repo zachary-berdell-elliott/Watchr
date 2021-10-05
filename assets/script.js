@@ -10,7 +10,7 @@ function watchlistDisplayer(){
 
         watchListBlock.click(function(){
             movieParam = watchListBlock.val();
-            ajaxFunc();
+            getMovie(movieParam);
         })
     });
 }
