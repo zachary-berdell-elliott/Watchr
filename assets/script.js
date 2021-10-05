@@ -42,4 +42,11 @@ watchlistDisplayer();
 })
 .catch(err => {
 	console.error(err);
+
+ // TMDB Fetch
+   
+ fetch('https://api.themoviedb.org/3/movie/550?api_key=58bc4a862a66afe4f88190b44a8dd8dd')    
+
+ .then(response => response.json())
+ .then(data => console.log(data));
 });
