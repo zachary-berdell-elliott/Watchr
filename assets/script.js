@@ -54,8 +54,18 @@ function getMovie(){
 }
 
 function mainConstructor(){
+    $("main").empty();
     var movieImage = $("<img>").attr("src", _pathToImageSrc);
+    var whereToWatch = $("<div>").attr("id", "service-list")
+    var whereToTitle = ("<p>").text("Where to Watch");
     var movieTitle = $("<h2>").text(_locationOfFetchedMovieName);
-    var movieInfo = $("div").attr("id", "movie-info");
-    movieRating = 
+    var movieInfo = $("<div>").attr("id", "movie-info");
+    var movieRating = $("<p>").text("Rating" + _fetchedRatingData);
+    var castAndCrew = $("<p>").text("Cast & Crew: " + _fetchedCastAndCrew);
+    var plot = $("<p>").text("Plot: " + _fetchedPlot);
+
+    //Add appends for movie links after function is understood
+    whereToWatch.append(whereToTitle);
+    movieInfo.append(movieRating, castAndCrew, plot);
+    $("main").append(movieImage, whereToWatch, watchListAddBtn, movieTitle, movieInfo);
 }
