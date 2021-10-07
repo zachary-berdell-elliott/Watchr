@@ -54,7 +54,10 @@ function getMovie(){
 }
 
 function mainConstructor(){
+    //Clears the main of data
     $("main").empty();
+    //Creates the elements that should be displayed in the main
+    //todo: Add styling classes
     var movieImage = $("<img>").attr("src", _pathToImageSrc);
     var whereToWatch = $("<div>").attr("id", "service-list")
     var whereToTitle = ("<p>").text("Where to Watch");
@@ -64,7 +67,8 @@ function mainConstructor(){
     var castAndCrew = $("<p>").text("Cast & Crew: " + _fetchedCastAndCrew);
     var plot = $("<p>").text("Plot: " + _fetchedPlot);
 
-    //Add appends for movie links after function is understood
+    //todo: Add appends for movie links after function is understood
+    //Appends the blocks together
     whereToWatch.append(whereToTitle);
     movieInfo.append(movieRating, castAndCrew, plot);
     $("main").append(movieImage, whereToWatch, watchListAddBtn, movieTitle, movieInfo);
