@@ -1,6 +1,6 @@
 var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
-var watchListAddBtn = $("#watchlist-button");
-var watchList = $("#watch-list").text("Add to Watch List");
+//var watchListAddBtn = $("#watchlist-button");
+var watchList = $("#watch-list");
 
 //function for building the watchlist
 function watchlistDisplayer(){
@@ -29,47 +29,29 @@ watchListAddBtn.click(function(){
 
 watchlistDisplayer();
 
-// Streaming Availability Fetch
-function getMovie(){
-    fetch("https://streaming-availability.p.rapidapi.com/search/basic?country=us&service=netflix&type=movie&genre=18&page=1&output_language=en&language=en", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
-            "x-rapidapi-key": "514988ace5msh951fbe99f73764cp120286jsn6ee999bd6cb1"
-        }
-    })
-    .then(response => {
-        console.log(response);
-    })
-    .catch(err => {
-        console.error(err);
+Streaming Availability Fetch
+ fetch("https://streaming-availability.p.rapidapi.com/search/basic?country=us&service=netflix&type=movie&genre=18&page=1&output_language=en&language=en", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "streaming-availability.p.rapidapi.com",
+		"x-rapidapi-key": "514988ace5msh951fbe99f73764cp120286jsn6ee999bd6cb1"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.error(err);
+});
 
-    // TMDB Fetch
-    
-    fetch('https://api.themoviedb.org/3/movie/550?api_key=58bc4a862a66afe4f88190b44a8dd8dd')    
-
+ // TMDB Fetch
+ $("#submitBtn").on("click", function(event) {
+     event.preventDefault();
+    var searchMovie = $("#search-bar").text();
+    var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
+    console.log(searchMovie);
+    fetch(movieIdFetch)    
+   
     .then(response => response.json())
     .then(data => console.log(data));
-    });
-}
-
-function mainConstructor(){
-    //Clears the main of data
-    $("main").empty();
-    //Creates the elements that should be displayed in the main
-    //todo: Add styling classes
-    var movieImage = $("<img>").attr("src", _pathToImageSrc);
-    var whereToWatch = $("<div>").attr("id", "service-list")
-    var whereToTitle = ("<p>").text("Where to Watch");
-    var movieTitle = $("<h2>").text(_locationOfFetchedMovieName);
-    var movieInfo = $("<div>").attr("id", "movie-info");
-    var movieRating = $("<p>").text("Rating" + _fetchedRatingData);
-    var castAndCrew = $("<p>").text("Cast & Crew: " + _fetchedCastAndCrew);
-    var plot = $("<p>").text("Plot: " + _fetchedPlot);
-
-    //todo: Add appends for movie links after function is understood
-    //Appends the blocks together
-    whereToWatch.append(whereToTitle);
-    movieInfo.append(movieRating, castAndCrew, plot);
-    $("main").append(movieImage, whereToWatch, watchListAddBtn, movieTitle, movieInfo);
-}
+ });
