@@ -1,6 +1,7 @@
 var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
 var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list").text("Add to Watch List");
+var slideBtn = $(".slide-panel").children("i");
 
 //function for building the watchlist
 function watchlistDisplayer(){
@@ -59,7 +60,7 @@ function mainConstructor(){
     //Creates the elements that should be displayed in the main
     //todo: Add styling classes
     var movieImage = $("<img>").attr("src", _pathToImageSrc);
-    var whereToWatch = $("<div>").attr("id", "service-list")
+    var whereToWatch = $("<div>").attr("id", "service-list");
     var whereToTitle = ("<p>").text("Where to Watch");
     var movieTitle = $("<h2>").text(_locationOfFetchedMovieName);
     var movieInfo = $("<div>").attr("id", "movie-info");
@@ -73,3 +74,9 @@ function mainConstructor(){
     movieInfo.append(movieRating, castAndCrew, plot);
     $("main").append(movieImage, whereToWatch, watchListAddBtn, movieTitle, movieInfo);
 }
+
+//Creates a slide effect for the rating and release paragraphs and causes the button to rotate
+slideBtn.click(function(){
+    //todo: Import a image and add a rotation effect
+    $(this).siblings("p").slideToggle("slow");
+});
