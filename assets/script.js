@@ -1,7 +1,6 @@
 var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
 //var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list");
-=======
 var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list").text("Add to Watch List");
 var slideBtn = $(".slide-panel").children("i");
@@ -32,31 +31,68 @@ watchListAddBtn.click(function(){
 
 watchlistDisplayer();
 
-Streaming Availability Fetch
- fetch("https://streaming-availability.p.rapidapi.com/search/basic?country=us&service=netflix&type=movie&genre=18&page=1&output_language=en&language=en", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "streaming-availability.p.rapidapi.com",
-		"x-rapidapi-key": "514988ace5msh951fbe99f73764cp120286jsn6ee999bd6cb1"
-	}
-})
-.then(response => {
-	console.log(response);
-})
-.catch(err => {
-	console.error(err);
-});
+// Calvin's section start
+//global movie Id
+var movieId;
+function streamingAvailabilityFetch(){
+    $("#streaming-options").empty();
+    //TO DO: Need to pull movie ID from Eric's fetch, set as variable and use variable to initiate streaming fetch.
+    // Streaming Availability Fetch // Note that "120" in the fetch URL is a placeholder for the movie name (user input variable) 
+    fetch("https://streaming-availability.p.rapidapi.com/get/basic?country=us&tmdb_id=movie/" + movieId + "&output_language=en", {
+	    "method": "GET",
+	    "headers": {
+		    "x-rapidapi-host": "streaming-availability.p.rapidapi.com",
+		    "x-rapidapi-key": "514988ace5msh951fbe99f73764cp120286jsn6ee999bd6cb1"
+	    }
+    })
+    //Converts response to JSON
+    .then(response => {
+        return response.json();
+    })
+    // Start function
+    .then(data => {
+        // Display "Streaming Options" Header
+        var streamOptionsTitle = document.createElement('h1');
+        streamOptionsTitle.setAttribute("id", "streaming-options-header");
+        streamOptionsTitle.textContent = "Streaming Options for " + data.originalTitle;
+        var streamingOptionsArea = document.querySelector("#streaming-options");
+        streamingOptionsArea.appendChild(streamOptionsTitle);
+        //Display list of streaming options (or else statement message if none available)
+        optionChecker = Object.keys(data.streamingInfo);
+        if (optionChecker.length > 0) {
+            var streamOptionsList = document.createElement('p');
+            streamOptionsList.textContent = Object.keys(data.streamingInfo);
+            var streamingOptionsListArea = document.querySelector("#streaming-options-header");
+            streamingOptionsListArea.appendChild(streamOptionsList);
+        } else {
+            var noStreamOptions = document.createElement('p');
+            var streamingOptionsListArea = document.querySelector("#streaming-options-header");
+            noStreamOptions.textContent = "No streaming options available. You might need to buy or rent this Movie.";
+            streamingOptionsListArea.appendChild(noStreamOptions);
+        }
+    })
+    // Console message if fetch is unsuccessful
+    .catch(err => {
+	    console.error(err);
+    });
+};
+// Calvin's Section ends
 
  // TMDB Fetch
  $("#submitBtn").on("click", function(event) {
      event.preventDefault();
-    var searchMovie = $("#search-bar").text();
+    var searchMovie = $("#search-bar").val();
     var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
     console.log(searchMovie);
+    console.log(movieIdFetch);
     fetch(movieIdFetch)    
    
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {console.log(data)
+        var movieIdExtract = data.results[0].id;
+        movieId = movieIdExtract;
+        streamingAvailabilityFetch();
+    });
    });
 
 
