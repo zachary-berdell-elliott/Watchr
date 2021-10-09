@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <title>Movie Finder</title>
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <header class="">
-    <h1 class="">Movie Picker</h1>
+    <h1 class="">Where To Watch</h1>
     <form  class="" aria-label="search bar" id="search-bar">
       <input type="text" placeholder="Search a Movie"></input>
       <button id="submitBtn">Submit</button>
@@ -18,22 +19,22 @@
     </form>
   </header>
   <aside class="">
-    <div id="rating-display">
+    <div id="rating-display" class="mf-border">
       <h3>Rating</h3>
       <i role="button" id="rating-button"></i>
+      <i class="fas fa-caret-down"></i>
       <p id="rating-p"></p>
     </div>
-    <div id="release-date">
+    <div id="release-date" class="slide-panel mf-border">
       <h3>Release Date</h3>
       <i role="button" id="release-button"></i>
       <p id="release-p"></p>
     </div>
-    <div id="watch-list">
+    <div id="watch-list" class="slide-panel mf-border">
       <h3>Watch List</h3>
     </div>
   </aside>
   <main>
-    
   </main>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
