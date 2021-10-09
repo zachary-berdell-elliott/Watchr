@@ -100,10 +100,10 @@ function streamingAvailabilityFetch(){
         var movieInfoArea = $("#movie-info");
         // Title
         var movieTitleText = data.results[0].title;
-        var movieTitle = `<h2> ${movieTitleText}</h2>`;
+        var movieTitle = `<h2 class="card-header-title">${movieTitleText}</h2>`;
         // Image 
         var movieUrlText = data.results[0].poster_path;
-        var movieImage = `<img src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
+        var movieImage = `<img class="card-image" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
         // Overview
         var movieOverviewText = data.results[0].overview;
         var movieOverview = `<div> ${movieOverviewText}</div>`;
