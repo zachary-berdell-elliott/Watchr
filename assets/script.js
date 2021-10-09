@@ -57,9 +57,11 @@ function streamingAvailabilityFetch(){
         streamOptionsTitle.textContent = "Streaming Options for " + data.originalTitle;
         var streamingOptionsArea = document.querySelector("#streaming-options");
         streamingOptionsArea.appendChild(streamOptionsTitle);
+   
         // Cast and Crew
         //var castCrew = data.cast;
         //var movieRating = `<p> Rating:  ${movieRatingText}</p>`;
+
         //Display list of streaming options (or else statement message if none available)
         optionChecker = Object.keys(data.streamingInfo);
         if (optionChecker.length > 0) {
@@ -94,6 +96,7 @@ function streamingAvailabilityFetch(){
    
     .then(response => response.json())
     .then(data => {console.log(data)
+
         var movieInfoArea = $("#movie-info");
         // Title
         var movieTitleText = data.results[0].title;
@@ -110,6 +113,7 @@ function streamingAvailabilityFetch(){
         // Append
         movieInfoArea.append(movieTitle, movieImage, movieOverview, movieRating);
         //
+
         var movieIdExtract = data.results[0].id;
         movieId = movieIdExtract;
         streamingAvailabilityFetch();
