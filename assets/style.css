@@ -1,3 +1,9 @@
+
+
+.title {
+    text-align: center;
+}
+
 h1 {
     color: white;
     background-image: linear-gradient(grey, rgb(73, 73, 73));
@@ -5,9 +11,10 @@ h1 {
     font-size: 1.5rem;
     padding-bottom: 20px;
 }
+
 #search-bar {
     padding: 5px;
-    text-align: center;
+    text-align: left;
 }
 .mf-border {
     box-shadow:-5px 5px 5px black;
