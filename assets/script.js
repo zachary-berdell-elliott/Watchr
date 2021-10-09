@@ -57,6 +57,11 @@ function streamingAvailabilityFetch(){
         streamOptionsTitle.textContent = "Streaming Options for " + data.originalTitle;
         var streamingOptionsArea = document.querySelector("#streaming-options");
         streamingOptionsArea.appendChild(streamOptionsTitle);
+   
+        // Cast and Crew
+        //var castCrew = data.cast;
+        //var movieRating = `<p> Rating:  ${movieRatingText}</p>`;
+
         //Display list of streaming options (or else statement message if none available)
         optionChecker = Object.keys(data.streamingInfo);
         if (optionChecker.length > 0) {
@@ -64,6 +69,7 @@ function streamingAvailabilityFetch(){
             streamOptionsList.textContent = Object.keys(data.streamingInfo);
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
             streamingOptionsListArea.appendChild(streamOptionsList);
+
         } else {
             var noStreamOptions = document.createElement('p');
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
@@ -80,6 +86,7 @@ function streamingAvailabilityFetch(){
 
  // TMDB Fetch
  $("#submitBtn").on("click", function(event) {
+    $("#movie-info").empty();
      event.preventDefault();
     var searchMovie = $("#search-bar").val();
     var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
@@ -89,19 +96,36 @@ function streamingAvailabilityFetch(){
    
     .then(response => response.json())
     .then(data => {console.log(data)
+
+        var movieInfoArea = $("#movie-info");
+        // Title
+        var movieTitleText = data.results[0].title;
+        var movieTitle = `<h2> ${movieTitleText}</h2>`;
+        // Image 
+        var movieUrlText = data.results[0].poster_path;
+        var movieImage = `<img src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
+        // Overview
+        var movieOverviewText = data.results[0].overview;
+        var movieOverview = `<div> ${movieOverviewText}</div>`;
+        //Rating
+        var movieRatingText = data.results[0].vote_average;
+        var movieRating = `<p> Rating:  ${movieRatingText}</p>`;
+        // Append
+        movieInfoArea.append(movieTitle, movieImage, movieOverview, movieRating);
+        //
+
         var movieIdExtract = data.results[0].id;
         movieId = movieIdExtract;
         streamingAvailabilityFetch();
     });
    });
 
-
 function mainConstructor(){
     //Clears the main of data
-    $("main").empty();
+    
     //Creates the elements that should be displayed in the main
     //todo: Add styling classes
-    var movieImage = $("<img>").attr("src", _pathToImageSrc);
+    
     var whereToWatch = $("<div>").attr("id", "service-list");
     var whereToTitle = ("<p>").text("Where to Watch");
     var movieTitle = $("<h2>").text(_locationOfFetchedMovieName);
