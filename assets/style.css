@@ -1,7 +1,12 @@
-
+.card {
+    background-color: cadetblue;
+    color: white;
+}
 
 .title {
     text-align: center;
+    color:white;
+    font-size: 100px;
 }
 
 h1 {
@@ -29,4 +34,8 @@ h1 {
     display: flex;
     
     width: 200px;
+}
+
+#overview {
+    width: left;
 }

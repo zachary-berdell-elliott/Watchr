@@ -100,18 +100,21 @@ function streamingAvailabilityFetch(){
         var movieInfoArea = $("#movie-info");
         // Title
         var movieTitleText = data.results[0].title;
-        var movieTitle = `<h2 class="card-header-title">${movieTitleText}</h2>`;
+        var movieTitle = `<h2 class="card-header-title m-4">${movieTitleText}</h2>`;
+         // Release Date
+         var movieDateText = data.results[0].release_date;
+         var movieReleaseDate = `<h3 class="card-content m-4">Release Date: ${movieDateText}</h3>`;
         // Image 
         var movieUrlText = data.results[0].poster_path;
-        var movieImage = `<img class="card-image" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
+        var movieImage = `<img class="card-image m-4" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
         // Overview
         var movieOverviewText = data.results[0].overview;
-        var movieOverview = `<div> ${movieOverviewText}</div>`;
+        var movieOverview = `<div class="card-content m-4 id="overview"> ${movieOverviewText}</div>`;
         //Rating
         var movieRatingText = data.results[0].vote_average;
-        var movieRating = `<p> Rating:  ${movieRatingText}</p>`;
+        var movieRating = `<p class="card-content m-4"> Rating:  ${movieRatingText}</p>`;
         // Append
-        movieInfoArea.append(movieTitle, movieImage, movieOverview, movieRating);
+        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
         //
 
         var movieIdExtract = data.results[0].id;
