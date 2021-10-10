@@ -16,6 +16,7 @@ h1 {
     text-align: center;
 }
 .mf-border {
+    margin-top: 10px;
     box-shadow:-5px 5px 5px black;
     border-style: solid;
     border-width: 2px;
