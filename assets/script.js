@@ -1,31 +1,35 @@
-var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || ["movie"];
+var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
 var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list");
 var slideBtn = $(".slide-panel").children("i");
-//function for building the watchlist
-function watchlistDisplayer(){
-    //Creates a new button for each saved array item
-    watchListArray.forEach(function(i){
-        var watchListBlock = $("<div>").addClass("watchlist-block is-flex");
-        var watchListName = $("<button>").addClass("watchlist-name").text(i);
-        var watchListRemove = $("<button>").addClass("watchlist-remove").text("X");
+
+//Creates a new button for each saved array item
+watchListArray.forEach(function(i){
+    watchListDisplayer(i);
+});
+
+function watchListDisplayer(movieValue){
+    var watchListBlock = $("<div>").addClass("watchlist-block is-flex");
+    var watchListName = $("<button>").addClass("watchlist-name").text(movieValue);
+    var watchListRemove = $("<button>").addClass("watchlist-remove").text("X");
         
-        watchListBlock.append(watchListName, watchListRemove);
+    watchListBlock.append(watchListName, watchListRemove);
         
-        //Sends the user to the watchlist item that they saved
-        watchListName.click(function(){
-            searchMovie = watchListName.text();
-            getMovie(searchMovie);
-        })
-        
-        watchList.append(watchListBlock);
+    //Sends the user to the watchlist item that they saved
+    watchListName.click(function(){
+        searchMovie = watchListName.text();
+        getMovie(searchMovie);
     });
+
+    //Removes item from the watchlist
+    watchListRemove.click(function(){
+        watchListArray.splice(movieValue, 1);
+        $(this).parent().remove();
+        localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+        });
+        
+    watchList.append(watchListBlock);
 }
-
-
-
-watchlistDisplayer();
-
 // Calvin's section start
 //global movie Id
 var movieId;
@@ -133,7 +137,7 @@ function getMovie(searchMovie){
         watchListAddBtn.click(function(){
             watchListArray.push(movieTitleText);
             localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
-            watchlistDisplayer();
+            watchlistDisplayer(movieTitleText);
         });
         // Release Date
         var movieDateText = data.results[0].release_date;
