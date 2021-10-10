@@ -1,14 +1,9 @@
-var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
+var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || ["movie"];
 var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list");
-var watchListAddBtn = $("#watchlist-button");
-var watchList = $("#watch-list").text("Add to Watch List");
 var slideBtn = $(".slide-panel").children("i");
 //function for building the watchlist
 function watchlistDisplayer(){
-    //Clears the watchlist of values.
-    watchList.empty();
-
     //Creates a new button for each saved array item
     watchListArray.forEach(function(i){
         var watchListBlock = `<div class="watchlist-block></div>`;
@@ -18,19 +13,14 @@ function watchlistDisplayer(){
         watchList.append(watchListBlock);
         
         //Sends the user to the watchlist item that they saved
-        watchListBlock.click(function(){
+        watchListName.click(function(){
             searchMovie = watchListBlock.val();
             getMovie(searchMovie);
         })
     });
 }
 
-//Function to save the item to the watchlist when the user clicks the button.
-watchListAddBtn.click(function(){
-    watchListArray.push(movieName);
-    localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
-    watchlistDisplayer();
-});
+
 
 watchlistDisplayer();
 
@@ -87,43 +77,10 @@ function streamingAvailabilityFetch(){
 };
 // Calvin's Section ends
 
- // TMDB Fetch
  $("#submitBtn").on("click", function(event) {
     event.preventDefault();
     var searchMovie = $("#search-bar").val();
-    $("#movie-info").empty();
-    var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
-    console.log(searchMovie);
-    console.log(movieIdFetch);
-    fetch(movieIdFetch)    
-   
-    .then(response => response.json())
-    .then(data => {console.log(data)
-
-        var movieInfoArea = $("#movie-info");
-        // Title
-        var movieTitleText = data.results[0].title;
-        var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
-         // Release Date
-         var movieDateText = data.results[0].release_date;
-         var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
-        // Image 
-        var movieUrlText = data.results[0].poster_path;
-        var movieImage = `<img class="card-image m-2" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
-        // Overview
-        var movieOverviewText = data.results[0].overview;
-        var movieOverview = `<div class="card-content m-2 id="overview"> ${movieOverviewText}</div>`;
-        //Rating
-        var movieRatingText = data.results[0].vote_average;
-        var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
-        // Append
-        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
-        //
-
-        var movieIdExtract = data.results[0].id;
-        movieId = movieIdExtract;
-        streamingAvailabilityFetch();
-    });
+    getMovie(searchMovie);
    });
 
 function mainConstructor(){
@@ -152,3 +109,48 @@ slideBtn.click(function(){
     //todo: Import a image and add a rotation effect
     $(this).siblings("p").slideToggle("slow");
 });
+
+//TMDB fetch
+function getMovie(searchMovie){
+    $("#movie-info").empty();
+    var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
+    console.log(searchMovie);
+    console.log(movieIdFetch);
+    fetch(movieIdFetch)    
+   
+    .then(response => response.json())
+    .then(data => {console.log(data)
+
+        var movieInfoArea = $("#movie-info");
+        // Title
+        var movieTitleText = data.results[0].title;
+        var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
+        //Add to watchlist button
+        var watchListAddBtn = `<button id="watchlist-button>Add To Watchlist</button>`;
+        //Function to save the item to the watchlist when the user clicks the button.
+        watchListAddBtn.click(function(){
+            watchListArray.push(movieName);
+            localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+            watchlistDisplayer();
+        });
+        // Release Date
+        var movieDateText = data.results[0].release_date;
+        var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
+        // Image 
+        var movieUrlText = data.results[0].poster_path;
+        var movieImage = `<img class="card-image m-2" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
+        // Overview
+        var movieOverviewText = data.results[0].overview;
+        var movieOverview = `<div class="card-content m-2 id="overview"> ${movieOverviewText}</div>`;
+        //Rating
+        var movieRatingText = data.results[0].vote_average;
+        var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
+        // Append
+        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
+        //
+
+        var movieIdExtract = data.results[0].id;
+        movieId = movieIdExtract;
+        streamingAvailabilityFetch();
+    });
+}
