@@ -6,17 +6,19 @@ var slideBtn = $(".slide-panel").children("i");
 function watchlistDisplayer(){
     //Creates a new button for each saved array item
     watchListArray.forEach(function(i){
-        var watchListBlock = `<div class="watchlist-block></div>`;
-        var watchListName = `<button class="watchlist-name">${i}</button>`;
-        var watchListRemove = `<button class="watchlist-remove>X</button>`
+        var watchListBlock = $("<div>").addClass("watchlist-block is-flex");
+        var watchListName = $("<button>").addClass("watchlist-name").text(i);
+        var watchListRemove = $("<button>").addClass("watchlist-remove").text("X");
+        
         watchListBlock.append(watchListName, watchListRemove);
-        watchList.append(watchListBlock);
         
         //Sends the user to the watchlist item that they saved
         watchListName.click(function(){
-            searchMovie = watchListBlock.val();
+            searchMovie = watchListName.text();
             getMovie(searchMovie);
         })
+        
+        watchList.append(watchListBlock);
     });
 }
 
@@ -126,10 +128,10 @@ function getMovie(searchMovie){
         var movieTitleText = data.results[0].title;
         var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
         //Add to watchlist button
-        var watchListAddBtn = `<button id="watchlist-button>Add To Watchlist</button>`;
+        var watchListAddBtn = $("<button>").attr("id", "watchlist-button");
         //Function to save the item to the watchlist when the user clicks the button.
         watchListAddBtn.click(function(){
-            watchListArray.push(movieName);
+            watchListArray.push(movieTitleText);
             localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
             watchlistDisplayer();
         });
