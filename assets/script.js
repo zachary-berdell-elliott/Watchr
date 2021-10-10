@@ -135,9 +135,19 @@ function getMovie(searchMovie){
         var watchListAddBtn = $("<button>").attr("id", "watchlist-button").text("Add to Watchlist");
         //Function to save the item to the watchlist when the user clicks the button.
         watchListAddBtn.click(function(){
-            watchListArray.push(movieTitleText);
-            localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
-            watchlistDisplayer(movieTitleText);
+            //Makes sure duplicates aren't added
+            var notDuplicate = true;
+            watchListArray.forEach(function(i){
+            if (movieTitleText === i){
+              notDuplicate = false;
+            }
+           });
+
+           if (notDuplicate) {
+                watchListArray.push(movieTitleText);
+                localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+                watchListDisplayer(movieTitleText);
+           }
         });
         // Release Date
         var movieDateText = data.results[0].release_date;
