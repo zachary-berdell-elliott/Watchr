@@ -1,5 +1,5 @@
 var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
-//var watchListAddBtn = $("#watchlist-button");
+var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list");
 var watchListAddBtn = $("#watchlist-button");
 var watchList = $("#watch-list").text("Add to Watch List");
@@ -11,13 +11,16 @@ function watchlistDisplayer(){
 
     //Creates a new button for each saved array item
     watchListArray.forEach(function(i){
-        var watchListBlock = $("<button>").text(i);
+        var watchListBlock = `<div class="watchlist-block></div>`;
+        var watchListName = `<button class="watchlist-name">${i}</button>`;
+        var watchListRemove = `<button class="watchlist-remove>X</button>`
+        watchListBlock.append(watchListName, watchListRemove);
         watchList.append(watchListBlock);
         
         //Sends the user to the watchlist item that they saved
         watchListBlock.click(function(){
-            movieParam = watchListBlock.val();
-            getMovie(movieParam);
+            searchMovie = watchListBlock.val();
+            getMovie(searchMovie);
         })
     });
 }
@@ -86,9 +89,9 @@ function streamingAvailabilityFetch(){
 
  // TMDB Fetch
  $("#submitBtn").on("click", function(event) {
-    $("#movie-info").empty();
-     event.preventDefault();
+    event.preventDefault();
     var searchMovie = $("#search-bar").val();
+    $("#movie-info").empty();
     var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
     console.log(searchMovie);
     console.log(movieIdFetch);
