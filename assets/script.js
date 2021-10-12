@@ -1,36 +1,35 @@
 var watchListArray = JSON.parse(localStorage.getItem("watchlist-array")) || [];
-//var watchListAddBtn = $("#watchlist-button");
-var watchList = $("#watch-list");
 var watchListAddBtn = $("#watchlist-button");
-var watchList = $("#watch-list").text("Add to Watch List");
+var watchList = $("#watch-list");
 var slideBtn = $(".slide-panel").children("i");
-//function for building the watchlist
-function watchlistDisplayer(){
-    //Clears the watchlist of values.
-    watchList.empty();
 
-    //Creates a new button for each saved array item
-    watchListArray.forEach(function(i){
-        var watchListBlock = $("<button>").text(i);
-        watchList.append(watchListBlock);
-        
-        //Sends the user to the watchlist item that they saved
-        watchListBlock.click(function(){
-            movieParam = watchListBlock.val();
-            getMovie(movieParam);
-        })
-    });
-}
-
-//Function to save the item to the watchlist when the user clicks the button.
-watchListAddBtn.click(function(){
-    watchListArray.push(movieName);
-    localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
-    watchlistDisplayer();
+//Creates a new button for each saved array item
+watchListArray.forEach(function(i){
+    watchListDisplayer(i);
 });
 
-watchlistDisplayer();
+function watchListDisplayer(movieValue){
+    var watchListBlock = $("<div>").addClass("watchlist-block is-flex");
+    var watchListName = $("<button>").addClass("watchlist-name").text(movieValue);
+    var watchListRemove = $("<button>").addClass("watchlist-remove").text("X");
+        
+    watchListBlock.append(watchListName, watchListRemove);
+        
+    //Sends the user to the watchlist item that they saved
+    watchListName.click(function(){
+        searchMovie = watchListName.text();
+        getMovie(searchMovie);
+    });
 
+    //Removes item from the watchlist
+    watchListRemove.click(function(){
+        watchListArray.splice(movieValue, 1);
+        $(this).parent().remove();
+        localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+        });
+        
+    watchList.append(watchListBlock);
+}
 // Calvin's section start
 //global movie Id
 var movieId;
@@ -84,43 +83,10 @@ function streamingAvailabilityFetch(){
 };
 // Calvin's Section ends
 
- // TMDB Fetch
  $("#submitBtn").on("click", function(event) {
-    $("#movie-info").empty();
-     event.preventDefault();
+    event.preventDefault();
     var searchMovie = $("#search-bar").val();
-    var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
-    console.log(searchMovie);
-    console.log(movieIdFetch);
-    fetch(movieIdFetch)    
-   
-    .then(response => response.json())
-    .then(data => {console.log(data)
-
-        var movieInfoArea = $("#movie-info");
-        // Title
-        var movieTitleText = data.results[0].title;
-        var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
-         // Release Date
-         var movieDateText = data.results[0].release_date;
-         var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
-        // Image 
-        var movieUrlText = data.results[0].poster_path;
-        var movieImage = `<img class="card-image m-2" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
-        // Overview
-        var movieOverviewText = data.results[0].overview;
-        var movieOverview = `<div class="card-content m-2 id="overview"> ${movieOverviewText}</div>`;
-        //Rating
-        var movieRatingText = data.results[0].vote_average;
-        var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
-        // Append
-        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
-        //
-
-        var movieIdExtract = data.results[0].id;
-        movieId = movieIdExtract;
-        streamingAvailabilityFetch();
-    });
+    getMovie(searchMovie);
    });
 
 function mainConstructor(){
@@ -149,3 +115,57 @@ slideBtn.click(function(){
     //todo: Import a image and add a rotation effect
     $(this).siblings("p").slideToggle("slow");
 });
+
+//TMDB fetch
+function getMovie(searchMovie){
+    $("#movie-info").empty();
+    var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
+    console.log(searchMovie);
+    console.log(movieIdFetch);
+    fetch(movieIdFetch)    
+   
+    .then(response => response.json())
+    .then(data => {console.log(data)
+        var movieInfoArea = $("#movie-info");
+        // Title
+        var movieTitleText = data.results[0].title;
+        var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
+        //Add to watchlist button
+        var watchListAddBtn = $("<button>").attr("id", "watchlist-button").text("Add to Watchlist");
+        //Function to save the item to the watchlist when the user clicks the button.
+        watchListAddBtn.click(function(){
+            //Makes sure duplicates aren't added
+            var notDuplicate = true;
+            watchListArray.forEach(function(i){
+            if (movieTitleText === i){
+              notDuplicate = false;
+            }
+           });
+
+           if (notDuplicate) {
+                watchListArray.push(movieTitleText);
+                localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
+                watchListDisplayer(movieTitleText);
+           }
+        });
+        // Release Date
+         var movieDateText = data.results[0].release_date;
+         var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
+        // Image 
+        var movieUrlText = data.results[0].poster_path;
+        var movieImage = `<img class="card-image m-2" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
+        // Overview
+        var movieOverviewText = data.results[0].overview;
+        var movieOverview = `<div class="card-content m-2 id="overview"> ${movieOverviewText}</div>`;
+        //Rating
+        var movieRatingText = data.results[0].vote_average;
+        var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
+        // Append
+        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
+        //
+
+        var movieIdExtract = data.results[0].id;
+        movieId = movieIdExtract;
+        streamingAvailabilityFetch();
+     });
+}
