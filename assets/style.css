@@ -1,39 +1,56 @@
+body {
+    background-color:grey;
+}
 .card {
     background-color: cadetblue;
-    color: white;
+    color:whitesmoke;
+    padding: 2%;
 }
-
 .title {
     text-align: center;
-    color:white;
+    color:lightgrey;
     font-size: 100px;
 }
 
 h1 {
-    color: white;
+    color: lightgrey;
     background-image: linear-gradient(grey, rgb(73, 73, 73));
     font-style: italic;
     font-size: 1.5rem;
     padding-bottom: 20px;
 }
 
+#submitBtn {
+    color: black;
+    font-weight: bold;
+    margin-left: 3px;
+}
+#watchlist-button {
+    background-image: linear-gradient(grey, rgb(73,73,73));
+}
+
 #search-bar {
+    color: black;
     padding: 5px;
     text-align: left;
+    background-color:cadetblue;
+    padding: 2%;
+    width: 70%;
 }
+
 .mf-border {
+    text-align: center;
     margin-top: 10px;
     box-shadow:-5px 5px 5px black;
     border-style: solid;
     border-width: 2px;
-    width: 130px;
+    width: 70%;
     border-radius: 10px;
-    background-image:linear-gradient(red, yellow);
+    background-image:linear-gradient(cadetblue, grey);
 }
 #service-list {
     border-style: solid;
     display: flex;
-    
     width: 200px;
 }
 

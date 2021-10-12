@@ -102,7 +102,6 @@ function streamingAvailabilityFetch(){
     getMovie(searchMovie);
    });
 
-
 //Creates a slide effect for the rating and release paragraphs and causes the button to rotate
 slideBtn.click(function(){
     //todo: Import a image and add a rotation effect
