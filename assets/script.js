@@ -77,6 +77,7 @@ function streamingAvailabilityFetch(){
                 streamUl.appendChild(li);
                 li.innerHTML += optionChecker;
             });
+
         } else {
             var noStreamOptions = document.createElement('p');
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
