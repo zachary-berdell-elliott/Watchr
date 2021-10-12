@@ -4,22 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="normalize" href="assets/normalize.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="assets/style.css">
   <title>Movie Finder</title>
   
 </head>
 <body>
-  <header class="">
-    <h1 class="">Where To Watch</h1>
+  <header class="header block">
+    <h1 class="title">Watchr</h1>
+  </header>
+  <div class="columns is-flex">
+  <aside class="column">
     <form  class="" aria-label="search bar" >
       <input type="text" placeholder="Search a Movie" id="search-bar"></input>
-      <button id="submitBtn">Submit</button>
+      <button class="button is-primary" id="submitBtn">Submit</button>
       <i role="button" class="" id="search-button"></i>
     </form>
-  </header>
-  <aside class="">
-    <div id="rating-display" class="mf-border">
+    <!-- <div id="rating-display" class="mf-border">
       <h3>Rating</h3>
       <i role="button" id="rating-button"></i>
       <i class="fas fa-caret-down"></i>
@@ -29,21 +31,18 @@
       <h3>Release Date</h3>
       <i role="button" id="release-button"></i>
       <p id="release-p"></p>
-    </div>
+    </div> -->
     <div id="watch-list" class="slide-panel mf-border">
       <h3>Watch List</h3>
-    </div id="add-to-watch-list">
-      <h3>Add To Watch List</h3>
-    <div>
-      
     </div>
   </aside>
-  <main>
-    <div id="movie-info">
+  <main class="column is-three-quarters containter is-fluid mr-2">
+    <div class="card columns" id="movie-info">
     </div>
     <div id="streaming-options">
     </div>
   </main>
+</div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
 </body>
