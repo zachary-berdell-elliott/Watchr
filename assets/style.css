@@ -1,5 +1,7 @@
-body {
+html, body {
     background-color:grey;
+    width: 100%;
+    height: 100%;
 }
 .card {
     background-color: cadetblue;
@@ -11,7 +13,6 @@ body {
     color:lightgrey;
     font-size: 100px;
 }
-
 h1 {
     color: lightgrey;
     background-image: linear-gradient(grey, rgb(73, 73, 73));
@@ -26,6 +27,7 @@ h1 {
 }
 #watchlist-button {
     background-image: linear-gradient(grey, rgb(73,73,73));
+    color: black;
 }
 #search-bar {
     color: black;
