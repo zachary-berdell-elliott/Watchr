@@ -19,6 +19,7 @@ h1 {
     font-size: 1.5rem;
     padding-bottom: 20px;
 }
+
 #submitBtn {
     color: black;
     font-weight: bold;
@@ -27,6 +28,7 @@ h1 {
 #watchlist-button {
     background-image: linear-gradient(grey, rgb(73,73,73));
 }
+
 #search-bar {
     color: black;
     padding: 5px;
@@ -35,8 +37,10 @@ h1 {
     padding: 2%;
     width: 70%;
 }
+
 .mf-border {
     text-align: center;
+    margin-top: 10px;
     box-shadow:-5px 5px 5px black;
     border-style: solid;
     border-width: 2px;
@@ -49,6 +53,7 @@ h1 {
     display: flex;
     width: 200px;
 }
+
 #overview {
     width: left;
 }

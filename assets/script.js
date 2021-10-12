@@ -63,11 +63,20 @@ function streamingAvailabilityFetch(){
 
         //Display list of streaming options (or else statement message if none available)
         optionChecker = Object.keys(data.streamingInfo);
+        console.log(optionChecker);
         if (optionChecker.length > 0) {
-            var streamOptionsList = document.createElement('p');
-            streamOptionsList.textContent = Object.keys(data.streamingInfo);
+            //Create UL
+            var streamUl = document.createElement('ul');
+            streamUl.setAttribute("id", "streamUl");
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
-            streamingOptionsListArea.appendChild(streamOptionsList);
+            streamingOptionsListArea.appendChild(streamUl);
+
+            //Create and append list items
+            optionChecker.forEach(function (optionChecker) {
+                let li = document.createElement('li');
+                streamUl.appendChild(li);
+                li.innerHTML += optionChecker;
+            });
 
         } else {
             var noStreamOptions = document.createElement('p');
@@ -79,6 +88,10 @@ function streamingAvailabilityFetch(){
     // Console message if fetch is unsuccessful
     .catch(err => {
 	    console.error(err);
+        var optionsError = document.createElement('p');
+        var streamingOptionsListArea = document.querySelector("#streaming-options-header");
+        optionsError.textContent = "Oh no! There was a problem with your request.";
+        streamingOptionsListArea.appendChild(noStreamOptions);
     });
 };
 // Calvin's Section ends
@@ -88,27 +101,6 @@ function streamingAvailabilityFetch(){
     var searchMovie = $("#search-bar").val();
     getMovie(searchMovie);
    });
-
-function mainConstructor(){
-    //Clears the main of data
-    
-    //Creates the elements that should be displayed in the main
-    //todo: Add styling classes
-    
-    var whereToWatch = $("<div>").attr("id", "service-list");
-    var whereToTitle = ("<p>").text("Where to Watch");
-    var movieTitle = $("<h2>").text(_locationOfFetchedMovieName);
-    var movieInfo = $("<div>").attr("id", "movie-info");
-    var movieRating = $("<p>").text("Rating" + _fetchedRatingData);
-    var castAndCrew = $("<p>").text("Cast & Crew: " + _fetchedCastAndCrew);
-    var plot = $("<p>").text("Plot: " + _fetchedPlot);
-
-    //todo: Add appends for movie links after function is understood
-    //Appends the blocks together
-    whereToWatch.append(whereToTitle);
-    movieInfo.append(movieRating, castAndCrew, plot);
-    $("main").append(movieImage, whereToWatch, watchListAddBtn, movieTitle, movieInfo);
-}
 
 //Creates a slide effect for the rating and release paragraphs and causes the button to rotate
 slideBtn.click(function(){
