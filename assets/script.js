@@ -63,12 +63,27 @@ function streamingAvailabilityFetch(){
 
         //Display list of streaming options (or else statement message if none available)
         optionChecker = Object.keys(data.streamingInfo);
+        console.log(optionChecker);
         if (optionChecker.length > 0) {
-            var streamOptionsList = document.createElement('p');
-            streamOptionsList.textContent = Object.keys(data.streamingInfo);
+            //Create UL
+            var streamUl = document.createElement('ul');
+            streamUl.setAttribute("id", "streamUl");
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
-            streamingOptionsListArea.appendChild(streamOptionsList);
+            streamingOptionsListArea.appendChild(streamUl);
 
+
+            //Create and append list items
+            optionChecker.forEach(function (optionChecker) {
+                let li = document.createElement('li');
+                streamUl.appendChild(li);
+                li.innerHTML += optionChecker;
+            });
+            /*
+            var streamOptionsList = document.createElement('li');
+            streamOptionsList.textContent = Object.keys(data.streamingInfo);
+            var streamingUlArea = document.querySelector("#streamUl");
+            streamingUlArea.appendChild(streamOptionsList);
+            */
         } else {
             var noStreamOptions = document.createElement('p');
             var streamingOptionsListArea = document.querySelector("#streaming-options-header");
