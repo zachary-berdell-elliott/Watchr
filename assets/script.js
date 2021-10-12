@@ -161,7 +161,7 @@ function getMovie(searchMovie){
         var movieRatingText = data.results[0].vote_average;
         var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
         // Append
-        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
+        movieInfoArea.append(movieTitle, movieReleaseDate, watchListAddBtn, movieImage, movieRating, movieOverview);
         //
 
         var movieIdExtract = data.results[0].id;
