@@ -126,7 +126,6 @@ function getMovie(searchMovie){
    
     .then(response => response.json())
     .then(data => {console.log(data)
-
         var movieInfoArea = $("#movie-info");
         // Title
         var movieTitleText = data.results[0].title;
@@ -150,8 +149,8 @@ function getMovie(searchMovie){
            }
         });
         // Release Date
-        var movieDateText = data.results[0].release_date;
-        var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
+         var movieDateText = data.results[0].release_date;
+         var movieReleaseDate = `<h3 class="card-content m-2">Release Date: ${movieDateText}</h3>`;
         // Image 
         var movieUrlText = data.results[0].poster_path;
         var movieImage = `<img class="card-image m-2" src="https://image.tmdb.org/t/p/w220_and_h330_face${movieUrlText}"/>`;
@@ -162,11 +161,11 @@ function getMovie(searchMovie){
         var movieRatingText = data.results[0].vote_average;
         var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
         // Append
-        movieInfoArea.append(movieTitle, watchListAddBtn, movieReleaseDate, movieImage, movieRating, movieOverview);
+        movieInfoArea.append(movieTitle, movieReleaseDate, movieImage, movieRating, movieOverview);
         //
 
         var movieIdExtract = data.results[0].id;
         movieId = movieIdExtract;
         streamingAvailabilityFetch();
-    });
+     });
 }
