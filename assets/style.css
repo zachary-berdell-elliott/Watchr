@@ -39,3 +39,8 @@ h1 {
 #overview {
     width: left;
 }
+
+h2 {
+    font-size: 54px;
+    color: white;
+}
