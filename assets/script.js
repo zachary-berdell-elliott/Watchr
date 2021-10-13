@@ -110,7 +110,9 @@ slideBtn.click(function(){
 
 //TMDB fetch
 function getMovie(searchMovie){
-    $("#movie-info").empty();
+    $("#title-column").empty();
+    $("#info-column").empty();
+    $("#overview-column").empty();
     var movieIdFetch = "https://api.themoviedb.org/3/search/movie?api_key=58bc4a862a66afe4f88190b44a8dd8dd&language=en-US&query=" + searchMovie + "&page=1";
     console.log(searchMovie);
     console.log(movieIdFetch);
@@ -118,7 +120,10 @@ function getMovie(searchMovie){
    
     .then(response => response.json())
     .then(data => {console.log(data)
-        var movieInfoArea = $("#movie-info");
+        //var movieInfoArea = $("#movie-info");
+        var titleColumn = $("#title-column");
+        var infoColumn = $("#info-column");
+        var overviewColumn = $("#overview-column");
         // Title
         var movieTitleText = data.results[0].title;
         var movieTitle = `<h2 class="card-header-title m-2">${movieTitleText}</h2>`;
@@ -149,13 +154,15 @@ function getMovie(searchMovie){
         // Overview
         var movieOverviewText = data.results[0].overview;
         var movieOverview = `<div class="card-content m-2 id="overview"> ${movieOverviewText}</div>`;
+        
         //Rating
         var movieRatingText = data.results[0].vote_average;
         var movieRating = `<p class="card-content m-2"> Rating:  ${movieRatingText}</p>`;
         // Append
-        movieInfoArea.append(movieTitle, movieReleaseDate, watchListAddBtn, movieImage, movieRating, movieOverview);
-        //
-
+        //movieInfoArea.append(movieTitle, movieReleaseDate, watchListAddBtn, movieImage, movieRating, movieOverview);
+        titleColumn.append(movieImage, movieTitle);
+        infoColumn.append(movieReleaseDate, watchListAddBtn, movieRating);
+        overviewColumn.append(movieOverview);
         var movieIdExtract = data.results[0].id;
         movieId = movieIdExtract;
         streamingAvailabilityFetch();
