@@ -64,3 +64,21 @@ h2 {
     font-size: 54px;
     color: white;
 }
+
+@media screen and (max-width: 1276px) {
+    #movie-info {
+        width: auto;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (min-width: 768px) {
+    #movie-info{
+        width: inline-block;
+    }
+}
+@media screen and (min-height: 294px){
+}
+#movie-info{
+    display: flex inline;
+}
