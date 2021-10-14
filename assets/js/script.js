@@ -23,7 +23,7 @@ function watchListDisplayer(movieValue){
 
     //Removes item from the watchlist
     watchListRemove.click(function(){
-        watchListArray.splice(movieValue.indexOf(), 1);
+        watchListArray.splice(watchListArray.indexOf(movieValue, 0), 1);
         $(this).parent().remove();
         localStorage.setItem("watchlist-array", JSON.stringify(watchListArray));
         });
