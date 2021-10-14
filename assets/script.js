@@ -95,7 +95,7 @@ function streamingAvailabilityFetch(){
     });
 };
 // Calvin's Section ends
-
+//
  $("#submitBtn").on("click", function(event) {
     event.preventDefault();
     var searchMovie = $("#search-bar").val();
